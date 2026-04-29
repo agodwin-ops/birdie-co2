@@ -1,0 +1,670 @@
+/* ============================================
+   Birdie CO2 Experience — Mobile-First Styles
+   Theme: Black & Yellow (#F5C518)
+   Font: Inter
+   ============================================ */
+
+:root {
+  --bg-dark: #000000;
+  --bg-light: #ffffff;
+  --yellow: #F5C518;
+  --yellow-hover: #E0B400;
+  --yellow-dim: rgba(245, 197, 24, 0.15);
+  --text-light: #ffffff;
+  --text-dark: #1a1a1a;
+  --text-muted: #999999;
+  --border-dark: #333333;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --transition: 0.3s ease;
+}
+
+/* Reset */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font);
+  font-weight: 400;
+  line-height: 1.5;
+  overflow: hidden;
+  height: 100dvh;
+  width: 100vw;
+}
+
+a {
+  color: var(--yellow);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  color: var(--yellow-hover);
+}
+
+sub {
+  font-size: 0.7em;
+}
+
+/* ============================================
+   Screens — full viewport sections
+   ============================================ */
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  opacity: 0;
+  transform: translateX(30px);
+  pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.screen.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.screen--dark {
+  background: var(--bg-dark);
+  color: var(--text-light);
+}
+
+.screen--light {
+  background: var(--bg-light);
+  color: var(--text-dark);
+}
+
+.screen__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px 40px;
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.screen__content--centered {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* ============================================
+   Progress Bar
+   ============================================ */
+
+.progress-bar {
+  display: flex;
+  gap: 4px;
+  padding: 12px 20px 0;
+  flex-shrink: 0;
+}
+
+.progress-bar::before,
+.progress-bar::after,
+.progress-bar .dot1,
+.progress-bar .dot2,
+.progress-bar .dot3 {
+  content: '';
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border-dark);
+  transition: background var(--transition);
+}
+
+/* JS adds these data attributes; CSS handles the fill */
+.screen--light .progress-bar::before,
+.screen--light .progress-bar::after {
+  background: #e0e0e0;
+}
+
+/* We'll use JS to generate the progress dots properly */
+
+/* ============================================
+   Screen 1: Consent
+   ============================================ */
+
+.consent-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 28px;
+  padding-top: 8px;
+}
+
+.consent-logo__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.consent-logo__name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-light);
+  letter-spacing: 0.02em;
+}
+
+.consent-logo__name-fr {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.consent-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--yellow);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.consent-body {
+  flex: 1;
+  margin-bottom: 24px;
+}
+
+.consent-body p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #cccccc;
+  margin-bottom: 12px;
+}
+
+.consent-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* Consent checkbox */
+.consent-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 24px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.consent-checkbox input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.consent-checkbox__box {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--yellow);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition), border-color var(--transition);
+  margin-top: 2px;
+}
+
+.consent-checkbox input:checked ~ .consent-checkbox__box {
+  background-color: #F5C518;
+  border-color: #F5C518;
+}
+
+.consent-checkbox input:checked ~ .consent-checkbox__box::after {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 12px;
+  border-right: 2.5px solid #000000;
+  border-bottom: 2.5px solid #000000;
+  transform: rotate(45deg);
+  margin-top: -2px;
+}
+
+.consent-checkbox__label {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+
+.btn {
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition), opacity var(--transition), transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--primary {
+  background: var(--yellow);
+  color: var(--bg-dark);
+}
+
+.btn--primary:hover {
+  background: var(--yellow-hover);
+}
+
+.btn--primary:disabled {
+  background: #444444;
+  color: #777777;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn--full {
+  width: 100%;
+  margin-top: auto;
+}
+
+/* ============================================
+   Screen 2: Status Report
+   ============================================ */
+
+.status-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+  margin-top: 8px;
+}
+
+.status-subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+}
+
+.status-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.status-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f7f7f7;
+  border: 3px solid transparent;
+  border-radius: var(--radius);
+  padding: 16px 8px 14px;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition), transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  font-family: var(--font);
+}
+
+.status-card:active {
+  transform: scale(0.97);
+}
+
+.status-card.selected {
+  border-color: #F5C518;
+  background-color: rgba(245, 197, 24, 0.15);
+}
+
+.status-card__illustration {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.status-card__illustration svg,
+.status-card__illustration .birdie-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.status-card__label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.status-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-bottom: 2px;
+}
+
+.status-card__icon--alive {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+}
+
+.status-card__icon--dead {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.status-card__text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: 0.05em;
+}
+
+.status-card__desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.status-info {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  padding: 0 8px;
+  margin-bottom: 24px;
+}
+
+/* ============================================
+   Screen 3: Health Impacts
+   ============================================ */
+
+.impacts-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--yellow);
+  margin-bottom: 28px;
+  margin-top: 8px;
+  line-height: 1.35;
+}
+
+.impacts-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.impacts-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.impacts-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--yellow-dim);
+  border-radius: var(--radius-sm);
+}
+
+.impacts-text {
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+/* ============================================
+   Screen 4: Mitigation
+   ============================================ */
+
+.mitigation-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--yellow);
+  margin-bottom: 4px;
+  margin-top: 8px;
+}
+
+.mitigation-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.mitigation-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.mitigation-col__heading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
+
+/* Checkbox items */
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.check-item input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.check-item__box {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border: 2px solid #555;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.check-item input:checked ~ .check-item__box {
+  background-color: #F5C518;
+  border-color: #F5C518;
+}
+
+.check-item input:checked ~ .check-item__box::after {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 12px;
+  border-right: 2.5px solid #000000;
+  border-bottom: 2.5px solid #000000;
+  transform: rotate(45deg);
+  margin-top: -2px;
+}
+
+.check-item__label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-light);
+}
+
+/* ============================================
+   Screen 5: Likert Scales
+   ============================================ */
+
+.likert-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--yellow);
+  margin-bottom: 4px;
+  margin-top: 8px;
+}
+
+.likert-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+.likert-question {
+  margin-bottom: 32px;
+}
+
+.likert-question__text {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.likert-scale {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.likert-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.25;
+  width: 48px;
+  flex-shrink: 0;
+}
+
+.likert-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid #555;
+  background: transparent;
+  color: var(--text-light);
+  font-family: var(--font);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition), color var(--transition), transform 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.likert-btn:active {
+  transform: scale(0.92);
+}
+
+.likert-btn.selected {
+  background-color: #F5C518;
+  border-color: #F5C518;
+  color: #000000;
+}
+
+/* ============================================
+   Screen 6: Thank You
+   ============================================ */
+
+.thanks-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 24px;
+}
+
+.thanks-icon svg,
+.thanks-icon .thanks-birdie-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.thanks-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--yellow);
+  margin-bottom: 12px;
+}
+
+.thanks-text {
+  font-size: 0.95rem;
+  color: #cccccc;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+/* ============================================
+   Tablet+ (480px+)
+   ============================================ */
+
+@media (min-width: 480px) {
+  .screen__content {
+    padding: 32px 32px 48px;
+  }
+
+  .consent-body p {
+    font-size: 0.95rem;
+  }
+
+  .status-card__illustration {
+    height: 140px;
+  }
+
+  .likert-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .likert-label {
+    font-size: 0.7rem;
+  }
+}
