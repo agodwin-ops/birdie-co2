@@ -2,24 +2,24 @@ name: Supabase Keepalive
 
 on:
   schedule:
-      - cron: '0 8 * * *'
-        workflow_dispatch:
+    - cron: '0 8 * * *'
+  workflow_dispatch:
 
-        jobs:
-          keepalive:
-              runs-on: ubuntu-latest
-                  steps:
-                        - name: Ping Supabase
-                                env:
-                                          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-                                                    SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-                                                            run: |
-                                                                      response=$(curl -s -o /dev/null -w "%{http_code}" \
-                                                                                  "${SUPABASE_URL}/rest/v1/responses?select=count&limit=1" \
-                                                                                              -H "apikey: ${SUPABASE_ANON_KEY}" \
-                                                                                                          -H "Authorization: Bearer ${SUPABASE_ANON_KEY}")
-                                                                                                                    echo "Supabase responded with HTTP $response"
-                                                                                                                              if [ "$response" -ge 400 ]; then
-                                                                                                                                          echo "::warning::Supabase returned HTTP $response"
-                                                                                                                                                      exit 1
-                                                                                                                                                                fi
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${SUPABASE_URL}/rest/v1/responses?select=count&limit=1" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}")
+          echo "Supabase responded with HTTP $response"
+          if [ "$response" -ge 400 ]; then
+            echo "::warning::Supabase returned HTTP $response"
+            exit 1
+          fi
