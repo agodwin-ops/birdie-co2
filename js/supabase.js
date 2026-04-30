@@ -8,9 +8,8 @@
    SETUP: Replace URL and ANON KEY below.
    ============================================ */
 
-/* SETUP: Replace these with your Supabase project credentials */
-const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+const SUPABASE_URL = 'https://vughmtwcucegylcieats.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_bnbnz2wBgiGa9KNOxm4Szg_CGCKFghW';
 
 const SUPABASE_CONFIGURED = !SUPABASE_URL.includes('YOUR_PROJECT');
 let supabaseClient = null;
