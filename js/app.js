@@ -21,8 +21,7 @@
     mitigation_turn_on_fans: false,
     mitigation_turn_on_filters: false,
     likert_knowledge: null,
-    likert_confidence: null,
-    user_agent: navigator.userAgent
+    likert_confidence: null
   };
 
   // --- Screens ---
