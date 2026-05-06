@@ -258,6 +258,7 @@ sub {
   border: none;
   border-radius: var(--radius);
   cursor: pointer;
+  text-decoration: none;
   transition: background var(--transition), opacity var(--transition), transform 0.15s ease;
   -webkit-tap-highlight-color: transparent;
   min-height: 52px;
