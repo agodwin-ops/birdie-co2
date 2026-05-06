@@ -642,6 +642,13 @@ sub {
   margin-bottom: 8px;
 }
 
+.thanks-countdown {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
 /* ============================================
    Tablet+ (480px+)
    ============================================ */

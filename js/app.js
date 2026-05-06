@@ -43,6 +43,11 @@
     currentScreen = index;
     buildProgressBar(index);
     window.scrollTo(0, 0);
+
+    // Start auto-redirect countdown on thank you screen
+    if (index === 5 && window._startThanksCountdown) {
+      window._startThanksCountdown();
+    }
   }
 
   // --- Progress bar ---
@@ -220,6 +225,34 @@
     });
   }
 
+  // --- Screen 6: Thank You — auto-redirect countdown ---
+  function initThanks() {
+    const REDIRECT_URL = 'https://www.crosh.ca';
+    const DELAY = 12;
+    const numEl = document.getElementById('countdown-num');
+    const doneBtn = document.getElementById('btn-done');
+
+    function redirect() {
+      window.location.href = REDIRECT_URL;
+    }
+
+    doneBtn.addEventListener('click', redirect);
+
+    // Countdown starts when this screen becomes active
+    // Called from showScreen when index === 5
+    window._startThanksCountdown = function () {
+      let remaining = DELAY;
+      const timer = setInterval(() => {
+        remaining -= 1;
+        if (numEl) numEl.textContent = remaining;
+        if (remaining <= 0) {
+          clearInterval(timer);
+          redirect();
+        }
+      }, 1000);
+    };
+  }
+
   // --- Init ---
   function init() {
     injectBirdieImages();
@@ -228,6 +261,7 @@
     initImpacts();
     initMitigation();
     initLikert();
+    initThanks();
     showScreen(0);
   }
 
