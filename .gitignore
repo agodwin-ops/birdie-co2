@@ -1,0 +1,18 @@
+# Review documents — not needed in the deployed repo
+Instructions.docx
+docx_images/
+
+# Claude Code workspace files
+.claude/
+
+# Environment files — never commit secrets
+.env
+.env.local
+.env.*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node (if build tools are ever added)
+node_modules/

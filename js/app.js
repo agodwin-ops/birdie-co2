@@ -9,10 +9,13 @@
 
   // --- Session data ---
   const params = new URLSearchParams(window.location.search);
+  // Sanitize location: allow only alphanumeric, hyphens, underscores (max 64 chars)
+  const rawLocation = params.get('location') || 'default';
+  const safeLocation = rawLocation.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 64) || 'default';
   const sessionData = {
     session_id: crypto.randomUUID(),
     birdie_status: null,
-    location_id: params.get('location') || 'default',
+    location_id: safeLocation,
     consent: false,
     completed: false,
     mitigation_open_windows: false,
